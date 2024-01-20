@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mao/pages/find_friends.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:google_mao/create_image.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,7 +17,8 @@ class _LoginPageState extends State<LoginPage>
   FocusNode _focusNode2 = FocusNode();
   bool _isTyping = false;
   bool _isPasswordVisible = false;
-
+  String image = "";
+  TextEditingController textController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -57,7 +59,7 @@ class _LoginPageState extends State<LoginPage>
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 26, 24, 36),
+                    padding: const EdgeInsets.fromLTRB(24, 36, 24, 36),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -74,6 +76,16 @@ class _LoginPageState extends State<LoginPage>
                           "에 오신것을 환영합니다",
                           style: TextStyle(
                             fontSize: 36,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Pretendard',
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          "🌎🤩🌈",
+                          style: TextStyle(
+                            fontSize: 18,
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'Pretendard',
@@ -99,7 +111,7 @@ class _LoginPageState extends State<LoginPage>
                   ),
                   Padding(
                     padding:
-                        EdgeInsets.fromLTRB(24, 32, 24, 4), // 여기에 margin 추가
+                        EdgeInsets.fromLTRB(24, 36, 24, 4), // 여기에 margin 추가
                     child: _login(context),
                   ),
                   _forgotPassword(context),
@@ -177,6 +189,7 @@ class _LoginPageState extends State<LoginPage>
         Container(
           height: 60,
           child: TextField(
+            controller: textController,
             style: TextStyle(color: Colors.white),
             focusNode: _focusNode1,
             decoration: InputDecoration(
@@ -234,7 +247,9 @@ class _LoginPageState extends State<LoginPage>
 
   _forgotPassword(context) {
     return TextButton(
-        onPressed: () {},
+        onPressed: () async {
+          image = await createImage.generateImage(textController.text);
+        },
         child: Text(
           "아바타를 클릭하여 프로필을 생성하세요.",
           style: TextStyle(color: Colors.white, fontSize: 12),
@@ -243,7 +258,7 @@ class _LoginPageState extends State<LoginPage>
 
   Widget _bottomWidget() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 24),
+      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: ElevatedButton(
         onPressed: () {},
         child: Image.asset(
