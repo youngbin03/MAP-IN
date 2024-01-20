@@ -56,13 +56,52 @@ class _LoginPageState extends State<LoginPage>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _header(context),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 24), // 여기에 margin 추가
+                    padding: const EdgeInsets.fromLTRB(24, 26, 24, 36),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "MAPING",
+                          style: TextStyle(
+                            fontSize: 36,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'Pretendard',
+                          ),
+                        ),
+                        Text(
+                          "에 오신것을 환영합니다",
+                          style: TextStyle(
+                            fontSize: 36,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Pretendard',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(24, 8, 24, 22),
                     child: _inputField(context),
                   ), // 여기에 margin 추가
-                  SizedBox(height: 5), // 간격 조절
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _header('assets/images/avatar-8.png', '남성'),
+                        _header('assets/images/avatar-6.png', '여성'),
+                        _header('assets/images/avatar-1.png', '기타'),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.fromLTRB(24, 32, 24, 4), // 여기에 margin 추가
+                    child: _login(context),
+                  ),
                   _forgotPassword(context),
                   const Spacer(),
                   Padding(
@@ -92,18 +131,9 @@ class _LoginPageState extends State<LoginPage>
     }
   }
 
-  Widget _header(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+  Widget _header(String imageUrl, String jender) {
     return Column(
       children: [
-        AnimatedSize(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-          child: SizedBox(
-            height: _isTyping ? screenHeight * 0.08 : screenHeight * 0.16,
-            // Replace YourWidget with the actual content
-          ),
-        ),
         InkWell(
           onTap: () {
             pickImage(ImageSource.gallery);
@@ -114,20 +144,28 @@ class _LoginPageState extends State<LoginPage>
                       width: 100, height: 100, fit: BoxFit.cover),
                 )
               : Image.asset(
-                  'assets/images/avatar-8.png', // 변경하려는 이미지의 경로
+                  imageUrl, // 변경하려는 이미지의 경로
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,
                 ),
         ),
-        AnimatedSize(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-          child: SizedBox(
-            height: _isTyping ? screenHeight * 0.06 : screenHeight * 0.1,
-            // Replace YourWidget with the actual content
+        Text(
+          jender,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Pretendard',
           ),
         ),
+        // AnimatedSize(
+        //   duration: Duration(milliseconds: 500),
+        //   curve: Curves.easeInOut,
+        //   child: SizedBox(
+        //     height: _isTyping ? screenHeight * 0.06 : screenHeight * 0.1,
+        //     // Replace YourWidget with the actual content
+        //   ),
+        // ),
       ],
     );
   }
@@ -142,7 +180,7 @@ class _LoginPageState extends State<LoginPage>
             style: TextStyle(color: Colors.white),
             focusNode: _focusNode1,
             decoration: InputDecoration(
-              hintText: "Username",
+              hintText: "  닉네임을 입력하세요",
               hintStyle: TextStyle(
                   color: Colors.white.withOpacity(0.5),
                   fontWeight: FontWeight.w400),
@@ -151,61 +189,32 @@ class _LoginPageState extends State<LoginPage>
                   borderSide: BorderSide.none),
               fillColor: Colors.lightBlue[100]?.withOpacity(0.1),
               filled: true,
-              prefixIcon: Icon(
-                Icons.person,
-                color: Colors.white.withOpacity(0.5),
-              ),
             ),
           ),
         ),
         SizedBox(height: 10),
-        Container(
-          height: 60,
-          child: TextField(
-            style: TextStyle(color: Colors.white),
-            focusNode: _focusNode2,
-            decoration: InputDecoration(
-              hintText: "Password",
-              hintStyle: TextStyle(
-                  color: Colors.white.withOpacity(0.5),
-                  fontWeight: FontWeight.w400),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide.none),
-              fillColor: Colors.lightBlue[100]?.withOpacity(0.1),
-              filled: true,
-              prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.white.withOpacity(0.5),
-              ),
-              suffixIcon: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _isPasswordVisible = !_isPasswordVisible;
-                  });
-                },
-                child: Icon(
-                  _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.white.withOpacity(0.5),
-                ),
-              ),
-            ),
-            obscureText: !_isPasswordVisible,
-          ),
-        ),
-        SizedBox(height: 10),
+      ],
+    );
+  }
+
+  _login(context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
         ElevatedButton(
           onPressed: () {
             _onLoginButtonPressed(context);
           },
           child: Text(
-            "Login",
+            "바로 로그인",
             style: TextStyle(fontSize: 16, color: Colors.white),
           ),
           style: ElevatedButton.styleFrom(
-            shape: StadiumBorder(),
-            padding: EdgeInsets.symmetric(vertical: 8), // 버튼 높이 변경
-            primary: Color.fromARGB(255, 63, 108, 206), // #1d2c4d 색상
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
+            padding: EdgeInsets.symmetric(vertical: 10), // 버튼 높이 변경
+            primary: Color.fromARGB(191, 28, 57, 121), // #1d2c4d 색상
           ),
         )
       ],
@@ -227,31 +236,28 @@ class _LoginPageState extends State<LoginPage>
     return TextButton(
         onPressed: () {},
         child: Text(
-          "Forgot password?",
-          style: TextStyle(color: Colors.white),
+          "아바타를 클릭하여 프로필을 생성하세요.",
+          style: TextStyle(color: Colors.white, fontSize: 12),
         ));
   }
 
   Widget _bottomWidget() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 24),
-      width: double.infinity,
       child: ElevatedButton(
         onPressed: () {},
-        child: Text(
-          "Create new account",
-          style: TextStyle(
-            fontSize: 16,
-            color: Color.fromARGB(255, 63, 108, 206),
-          ),
+        child: Image.asset(
+          'assets/icons/arrow_back_white.png',
+          color: Colors.white,
+          width: 24.0, // 원하는 폭으로 조정
+          height: 24.0, // 원하는 높이로 조정
         ),
         style: ElevatedButton.styleFrom(
-          shape: StadiumBorder(),
-          padding: EdgeInsets.symmetric(vertical: 8),
-          primary: Colors.transparent,
-          side: BorderSide(
-            color: Color.fromARGB(255, 63, 108, 206),
-          ), // outline 색상을 지정
+          padding: EdgeInsets.symmetric(vertical: 12),
+          primary: Color.fromARGB(115, 46, 112, 255),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
         ),
       ),
     );
