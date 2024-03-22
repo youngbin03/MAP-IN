@@ -104,9 +104,9 @@ class _LoginPageState extends State<LoginPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _header_ai('assets/images/avatar-12.png', '남성'),
-                        _header_ai('assets/images/avatar-11.png', '여성'),
-                        _header_ai('assets/images/avatar-14.png', '기타'),
+                        _header_ai('assets/images/avatar-12b.png', '남성'),
+                        _header_ai('assets/images/avatar-11b.png', '여성'),
+                        _header_ai('assets/images/avatar-14b.png', '기타'),
                       ],
                     ),
                   ),
