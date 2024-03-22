@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mao/pages/find_friends.dart';
+import 'package:google_mao/pages/linked_login.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mao/create_image.dart';
 
@@ -17,7 +18,7 @@ class _LoginPageState extends State<LoginPage>
   FocusNode _focusNode2 = FocusNode();
   bool _isTyping = false;
   bool _isPasswordVisible = false;
-  String image = "";
+  String image_ai = "";
   TextEditingController textController = TextEditingController();
   @override
   void initState() {
@@ -49,7 +50,7 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(0, 5, 40, 0.922),
+        backgroundColor: Color(0x000002),
         body: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
@@ -59,7 +60,7 @@ class _LoginPageState extends State<LoginPage>
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 36, 24, 36),
+                    padding: const EdgeInsets.fromLTRB(18, 36, 18, 36),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -103,9 +104,9 @@ class _LoginPageState extends State<LoginPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _header('assets/images/avatar-8.png', '남성'),
-                        _header('assets/images/avatar-6.png', '여성'),
-                        _header('assets/images/avatar-1.png', '기타'),
+                        _header_ai('assets/images/avatar-12.png', '남성'),
+                        _header_ai('assets/images/avatar-11.png', '여성'),
+                        _header_ai('assets/images/avatar-14.png', '기타'),
                       ],
                     ),
                   ),
@@ -161,6 +162,57 @@ class _LoginPageState extends State<LoginPage>
                   height: 100,
                   fit: BoxFit.cover,
                 ),
+        ),
+        SizedBox(
+          height: 6,
+        ),
+        Text(
+          jender,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Pretendard',
+          ),
+        ),
+        // AnimatedSize(
+        //   duration: Duration(milliseconds: 500),
+        //   curve: Curves.easeInOut,
+        //   child: SizedBox(
+        //     height: _isTyping ? screenHeight * 0.06 : screenHeight * 0.1,
+        //     // Replace YourWidget with the actual content
+        //   ),
+        // ),
+      ],
+    );
+  }
+
+  Widget _header_ai(String imageUrl, String jender) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: () async {
+            String newImage =
+                await createImage.generateImage(textController.text);
+            setState(() {
+              image_ai = newImage;
+            });
+          },
+          child: Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: image_ai != ""
+                    ? NetworkImage(image_ai) as ImageProvider<Object>
+                    : AssetImage(imageUrl), // 변경하려는 이미지의 경로
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 4,
         ),
         Text(
           jender,
@@ -227,7 +279,8 @@ class _LoginPageState extends State<LoginPage>
               borderRadius: BorderRadius.circular(18.0),
             ),
             padding: EdgeInsets.symmetric(vertical: 10), // 버튼 높이 변경
-            primary: Color.fromARGB(191, 28, 57, 121), // #1d2c4d 색상
+            primary: Color.fromARGB(185, 108, 109, 116)
+                .withOpacity(0.3), // #1d2c4d 색상
           ),
         )
       ],
@@ -248,7 +301,7 @@ class _LoginPageState extends State<LoginPage>
   _forgotPassword(context) {
     return TextButton(
         onPressed: () async {
-          image = await createImage.generateImage(textController.text);
+          image_ai = await createImage.generateImage(textController.text);
         },
         child: Text(
           "아바타를 클릭하여 프로필을 생성하세요.",
@@ -260,7 +313,13 @@ class _LoginPageState extends State<LoginPage>
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LinkedLogin()), // LoginPage 위젯 구현 필요
+          );
+        },
         child: Image.asset(
           'assets/icons/arrow_back_white.png',
           color: Colors.white,
@@ -269,7 +328,7 @@ class _LoginPageState extends State<LoginPage>
         ),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 12),
-          primary: Color.fromARGB(115, 46, 112, 255),
+          primary: Color.fromARGB(184, 178, 182, 209).withOpacity(0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
           ),

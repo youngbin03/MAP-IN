@@ -33,6 +33,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mao/model/map_style.dart';
 import 'package:google_mao/pages/find_friends.dart';
+import 'package:google_mao/pages/linked_login.dart';
 import 'package:google_mao/pages/login.dart';
 import 'package:google_mao/pages/map_circles.dart';
 import 'package:google_mao/pages/new.dart';
@@ -40,7 +41,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: LoginPage(),
+    home: LinkedLogin(),
     debugShowCheckedModeBanner: false,
   ));
 }
