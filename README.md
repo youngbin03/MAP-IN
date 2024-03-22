@@ -1,4 +1,4 @@
-# google_mao
+# MAP-IN
 
 A new Flutter project.
 
@@ -8,9 +8,8 @@ This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<img src="https://github.com/youngbin03/MAP-IN/assets/87307678/914b0618-85c9-4cea-a3b6-ba1bc4fe57c9" width = 180 />
+<img src="https://github.com/youngbin03/MAP-IN/assets/87307678/e0adefd0-b283-4dba-8474-a8c8caab9b56" width = 180 />
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+https://github.com/youngbin03/MAP-IN/assets/87307678/17d37f32-22c6-497c-a052-9931369efd2c
+
